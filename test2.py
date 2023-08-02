@@ -1,15 +1,6 @@
 import random
 
-name = input("Enter your name: ").capitalize()
-print("Welcome to KBC", name)
-print(
-    """ *******************************\n
-    You will be asked 10 questions in a row. You have to answer them.\nFor each correct answer, 100 points will be awarded.\n
-    You have to type the option number to give the answer.
-    If you want to exit, press 'e' or 'E'. \n*******************************"""
-)
-
-
+# Dictionary of questions
 question_bank = {
     "what is the smallest country in the world": {
         "options": ["vatican city", "monaco", "liechtenstein", "san marino"],
@@ -234,17 +225,16 @@ question_bank = {
         "ans": "7",
     },
 }
+no_of_que = int(input("Enter number of questions: "))
 
-no_of_que = int(input("Type the number of questions for the game: ").capitalize())
 if no_of_que <= 0:
-    print("Number of questions is too low.")
-elif no_of_que > 50:
-    print("Number of questions is too much. Keep it between 1 and 50.")
+    print("Number of questions too low")
+elif no_of_que > len(question_bank):
+    print("Number of questions too high")
 else:
-    # main quiz program
     score = 0
-
     asked_questions = []
+
     for i in range(no_of_que):
         # Get random question
         question = random.choice(list(question_bank.keys()))
@@ -262,32 +252,7 @@ else:
 
         for i, option in enumerate(options):
             print(f"{i+1}. {option}")
-
-        while True:
-            user_ans = input("Your answer: ")
-
-            # Validate input
-            if not user_ans:
-                print("Cannot be blank")
-                continue
-
-            if not user_ans.isdigit():
-                print("Must enter a number")
-                continue
-
-            # Input is valid, convert and process
-            try:
-                user_ans = int(user_ans)
-            except ValueError:
-                print("Invalid number entered")
-                continue
-
-            if user_ans < 1 or user_ans > len(options):
-                print("Number must be between 1 and", len(options))
-                continue
-
-            # Input is good, break loop
-            break
+        user_ans = int(input("Your answer : "))
 
         # Get user's actual choice from options list
         user_choice = options[user_ans - 1]
@@ -295,16 +260,8 @@ else:
         # Validate against answer
         if user_choice == question_bank[question]["ans"]:
             print("Correct!")
-            score += 100
+            score += 1
         else:
             print("Oops, wrong answer!")
 
-    total_possible_score = no_of_que * 100
-    print(f"\n{name}, Your Final Score: {score}")
-
-    if score >= 0.9 * total_possible_score:
-        print("Congratulations! You are now a crorepati.")
-    else:
-        print("Try again, you can do this.")
-
-# end of program
+    print(f"\nYour final score is {score}/{no_of_que}")
