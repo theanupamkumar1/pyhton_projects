@@ -267,6 +267,9 @@ else:
             user_ans = input("Your answer: ")
 
             # Validate input
+            if user_ans.lower() == "e":
+                print("You have exited the game.")
+                break
             if not user_ans:
                 print("Cannot be blank")
                 continue
